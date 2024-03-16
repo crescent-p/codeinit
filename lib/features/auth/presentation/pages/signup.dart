@@ -1,6 +1,10 @@
+import 'dart:io';
+
 import 'package:codeinit/core/common/widgets/loader.dart';
 import 'package:codeinit/core/theme/colors.dart';
+import 'package:codeinit/core/utils/image_picker.dart';
 import 'package:codeinit/core/utils/show_snackbar.dart';
+import 'package:codeinit/features/auth/data/models/user_model.dart';
 import 'package:codeinit/features/blog/presentation/pages/blog_page.dart';
 import 'package:codeinit/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:codeinit/features/auth/presentation/pages/signin.dart';
@@ -9,6 +13,7 @@ import 'package:codeinit/features/auth/presentation/widgets/auth_gradient_button
 import 'package:codeinit/features/home_screen/presentation/pages/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:image_picker/image_picker.dart';
 
 class SignUp extends StatefulWidget {
   const SignUp({super.key});
@@ -23,6 +28,10 @@ class _SignUpState extends State<SignUp> {
   final nameController = TextEditingController();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
+  final designationController = TextEditingController();
+  final websiteController = TextEditingController();
+  final phoneController = TextEditingController();
+  File? image;
 
   final _formKey = GlobalKey<FormState>();
 
@@ -82,10 +91,43 @@ class _SignUpState extends State<SignUp> {
                     controller: passwordController,
                   ),
                   const SizedBox(height: 20),
+                  AuthField(
+                    hintText: "Designation",
+                    controller: designationController,
+                  ),
+                  const SizedBox(height: 20),
+                  AuthField(
+                    hintText: "website",
+                    controller: websiteController,
+                  ),
+                  const SizedBox(height: 20),
+                  AuthField(
+                    hintText: "Phone Number",
+                    controller: phoneController,
+                  ),
+                  IconButton(
+                      onPressed: () async {
+                        image = await pickImage();
+                        if (image != null) {
+                          showSnackBar(context, 'Image selected.');
+                        } else {
+                          showSnackBar(context, 'Image not selected.');
+                        }
+                      },
+                      icon: const Icon(Icons.add_a_photo)),
+                  const SizedBox(height: 20),
                   AuthSignUpButton(
                       onPressed: () {
                         context.read<AuthBloc>().add(AuthSignUpEvent(
-                            name: nameController.text,
+                            user: UserModel(
+                              name: nameController.text,
+                              designation: designationController.text,
+                              website: websiteController.text,
+                              phone_number: phoneController.text,
+                              image_url: image?.path ?? "",
+                              id: "",
+                              email: emailController.text,
+                            ),
                             email: emailController.text,
                             password: passwordController.text));
                       },

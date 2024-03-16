@@ -1,6 +1,7 @@
 import 'package:codeinit/core/common/cubit/app_user_cubit.dart';
 import 'package:codeinit/core/usecases/usecase.dart';
 import 'package:codeinit/core/entities/user.dart';
+import 'package:codeinit/features/auth/data/models/user_model.dart';
 import 'package:codeinit/features/auth/domain/usecases/auth_sign_out.dart';
 import 'package:codeinit/features/auth/domain/usecases/auth_signin_usecase.dart';
 import 'package:codeinit/features/auth/domain/usecases/auth_signup_usecase.dart';
@@ -53,7 +54,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   void _onAuthSignUpEvent(
       AuthSignUpEvent event, Emitter<AuthState> emit) async {
     final res = await _userSignUpUseCase.repository.signUpWithEmailAndPassword(
-        name: event.name, email: event.email, password: event.password);
+        user: event.user, email: event.email, password: event.password);
     res.fold((l) => emit(AuthFailure(message: l.message)),
         (r) => _emitAuthSuccess(r, emit));
   }

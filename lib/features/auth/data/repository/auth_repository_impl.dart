@@ -17,14 +17,18 @@ class AuthRepositoryImpl implements AuthRepository {
 
   @override
   Future<Either<Failure, User>> getCurrentUser() async {
-    final session = authRemoteDataSource.currentUserSession;
+    final session = await authRemoteDataSource.getCurrentUserData;
     try {
       if (!await network.isConnected) {
         if (session != null) {
           return Right(UserModel(
-            id: session.user.id,
-            name: '',
-            email: session.user.email ?? '',
+            id: session.id,
+            name: session.name,
+            email: session.email,
+            image_url: session.image_url,
+            phone_number: session.phone_number,
+            website: session.website,
+            designation: session.designation,
           ));
         } else {
           return Left(
@@ -37,9 +41,13 @@ class AuthRepositoryImpl implements AuthRepository {
         return left(Failure(message: 'No user logged in'));
       } else {
         return right(UserModel(
-          email: session.user.email ?? '',
-          id: session.user.id,
-          name: session.user.email ?? '',
+          id: session.id,
+          name: session.name,
+          email: session.email,
+          image_url: session.image_url,
+          phone_number: session.phone_number,
+          website: session.website,
+          designation: session.designation,
         ));
       }
     } catch (e) {
@@ -56,11 +64,11 @@ class AuthRepositoryImpl implements AuthRepository {
 
   @override
   Future<Either<Failure, User>> signUpWithEmailAndPassword(
-      {required String name,
+      {required UserModel user,
       required String email,
       required String password}) async {
     return _getUser(() => authRemoteDataSource.signUpWithEmailAndPassword(
-        name: name, email: email, password: password));
+        user: user, email: email, password: password));
   }
 
   Future<Either<Failure, User>> _getUser(
@@ -90,5 +98,3 @@ class AuthRepositoryImpl implements AuthRepository {
     }
   }
 }
-
-class AuthrRemoteDataSourceImple {}
