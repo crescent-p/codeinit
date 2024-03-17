@@ -67,8 +67,8 @@ Flutter App Using Supabase, Hive, BLoc, Cubit.
 **Profile Page**
     
     - User's can view their profile.
-    - Phone link is provided to contact the user.
-    - Email link is provided to mail the user.
+    - Phone link is provided to contact the user. **Redirects to phone app.**
+    - Email link is provided to mail the user.  **Redirects to mail app.**
     - Their is an option to add Blogs showcasing Memorable moments.
     - Logout option is provided.
     
