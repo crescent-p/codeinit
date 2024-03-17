@@ -81,5 +81,5 @@ Flutter App Using Supabase, Hive, BLoc, Cubit.
 ![Blog Success message](https://zmcohvajrzxmartfcasr.supabase.co/storage/v1/object/public/mybucker/successfully%20uploaded%20message.jpg)
 
 
-- [Youtube Video ShowCasing the App link](https://youtu.be/2H6qumcEtpo?si=1BDeceOaeAogSLFN)
+- [Youtube Video ShowCasing the App](https://youtu.be/2H6qumcEtpo?si=1BDeceOaeAogSLFN)
 - [App link .apk](https://drive.google.com/file/d/1MxnfjXJtbXwxhWp15FQnWKCLiJ4Tgacf/view?usp=sharing)
