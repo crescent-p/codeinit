@@ -1,5 +1,5 @@
 # Eternal
-![logo](https://drive.google.com/file/d/1FA5g69twkj4soPcxmDrkbH73nk_Ltwne/view?usp=sharing)
+![logo](https://zmcohvajrzxmartfcasr.supabase.co/storage/v1/object/public/mybucker/logoyearbook.jpg)
 
 A new Flutter project.
 
