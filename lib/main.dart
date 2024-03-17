@@ -6,6 +6,7 @@ import 'package:codeinit/features/auth/presentation/pages/signin.dart';
 import 'package:codeinit/features/home_screen/presentation/bloc/main_page_bloc.dart';
 import 'package:codeinit/features/home_screen/presentation/pages/home_screen.dart';
 import 'package:codeinit/init_dependencies.dart';
+import 'package:codeinit/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -26,7 +27,7 @@ void main() async {
       ),
       BlocProvider(create: (_) => serviceLocator<MainPageBloc> ())
     ],
-    child: const MyApp(),
+    child: const SplashScreen(),
   ));
 }
 
