@@ -29,11 +29,13 @@ Flutter App Using Supabase, Hive, BLoc, Cubit.
 
 #SignIn Page
     - User's can sign in using their email and password.
-    ![SignIN Page](https://zmcohvajrzxmartfcasr.supabase.co/storage/v1/object/public/mybucker/signin%20page.jpg)
+    
+![SignIN Page](https://zmcohvajrzxmartfcasr.supabase.co/storage/v1/object/public/mybucker/signin%20page.jpg)
     
 #SignUp Page
     - User's can sign up using their email and password.
-    ![SignUp Page](https://zmcohvajrzxmartfcasr.supabase.co/storage/v1/object/public/mybucker/signup%20page.jpg)
+    
+![SignUp Page](https://zmcohvajrzxmartfcasr.supabase.co/storage/v1/object/public/mybucker/signup%20page.jpg)
 
 #HomeScreen
     - Upcoming Events are displayed.
