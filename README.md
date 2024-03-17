@@ -11,13 +11,13 @@ Flutter App Using Supabase, Hive, BLoc, Cubit.
     - Other user's can view the blogs and yearbooks uploaded onto the database.
 
 **Hive**
-    - When internet connection is present the app will sync the data with the local database.
-    - When offline the cached data is displayed.
+    1. When internet connection is present the app will sync the data with the local database.
+    1. When offline the cached data is displayed.
 
 **State Managment : BLoc and Cubit**
-    - Data is handled by BLoc and Cubit.
-    - When traversing different screens the data is maintained using BLoc.
-    - Cubit is used to persist User details, so relogin is not required.
+    1. Data is handled by BLoc and Cubit.
+    1. When traversing different screens the data is maintained using BLoc.
+    1. Cubit is used to persist User details, so relogin is not required.
 
 **UI**
     - Splash Screen is displayed using Lottie Animation.
