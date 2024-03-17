@@ -1,3 +1,4 @@
+import 'package:codeinit/core/common/widgets/tile_card.dart';
 import 'package:codeinit/features/blog/presentation/bloc/blog_bloc.dart';
 import 'package:codeinit/features/home_screen/presentation/widgets/blog_card_foreign.dart';
 import 'package:flutter/material.dart';
@@ -12,10 +13,23 @@ class SearchBarMine extends StatefulWidget {
 
 class _SearchBarMineState extends State<SearchBarMine> {
   final searchController = TextEditingController();
+  @override
+  void initState() {
+    super.initState();
+    context.read<BlogBloc>().add(GetAllBlogEvent());
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          setState(() {
+            context.read<BlogBloc>().add(GetAllBlogEvent());
+          });
+        },
+        child: const Icon(Icons.refresh),
+      ),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -49,6 +63,20 @@ class _SearchBarMineState extends State<SearchBarMine> {
                   );
                 } else if (state is BlogFailure) {
                   return Text(state.message);
+                } else if (state is BlogLoadSuccess) {
+                  return SingleChildScrollView(
+                    child: ListView.builder(
+                      physics: const NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      itemCount: state.blogs.length,
+                      itemBuilder: (context, index) {
+                        return BlogCard(
+                          state: state,
+                          index: index,
+                        );
+                      },
+                    ),
+                  );
                 }
                 return const SizedBox();
               },

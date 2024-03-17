@@ -3,7 +3,6 @@ import 'package:codeinit/core/common/widgets/loader.dart';
 import 'package:codeinit/core/utils/file_picker.dart';
 import 'package:codeinit/core/utils/show_snackbar.dart';
 import 'package:codeinit/features/blog/presentation/bloc/blog_bloc.dart';
-import 'package:codeinit/features/home_screen/data/models/yearbook_model.dart';
 import 'package:codeinit/features/home_screen/presentation/bloc/main_page_bloc.dart';
 import 'package:codeinit/features/home_screen/presentation/widgets/year_book_card.dart';
 import 'package:file_picker/file_picker.dart';
@@ -22,11 +21,20 @@ class _YearBookBarState extends State<YearBookBar> {
   @override
   void initState() {
     super.initState();
+    context.read<BlogBloc>().add(GetAllYearBookModeEvent());
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          setState(() {
+            context.read<BlogBloc>().add(GetAllYearBookModeEvent());
+          });
+        },
+        child: const Icon(Icons.refresh),
+      ),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -47,20 +55,12 @@ class _YearBookBarState extends State<YearBookBar> {
                   onPressed: () async {
                     if (file != null) {
                       final ioFile = File(file!.path!);
-                      context.read<MainPageBloc>().add(
-                            UploadPdfEvent(
-                              file: ioFile,
-                              model: YearBookModel(
-                                user_id: '',
-                                id: '',
-                                link: '',
-                                name: file!.name,
-                              ),
-                            ),
+                      context.read<BlogBloc>().add(
+                            UploadYearBookEvent(file: ioFile),
                           );
                       showSnackBar(context, 'File Uploaded Successfully!');
                       await Future.delayed(const Duration(seconds: 2));
-                      context.read<MainPageBloc>().add(GetYearBookEvent());
+                      context.read<BlogBloc>().add(GetAllYearBookModeEvent());
                     } else {
                       showSnackBar(context, "Please select a file to upload");
                     }
@@ -69,7 +69,7 @@ class _YearBookBarState extends State<YearBookBar> {
                 ),
               ],
             ),
-            BlocConsumer<MainPageBloc, MainPageState>(
+            BlocConsumer<BlogBloc, BlogState>(
               listener: (context, state) {
                 if (state is BlogFailure) {
                   return showSnackBar(
@@ -81,16 +81,20 @@ class _YearBookBarState extends State<YearBookBar> {
               builder: (context, state) {
                 if (state is MainPageLoading) {
                   return const LoadingIndicator();
-                } else if (state is GetYearBookSuccess) {
-                  return ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: state.yearBookModels.length,
-                      itemBuilder: (context, index) {
-                        return Tile(
-                          title: state.yearBookModels[index].name,
-                          link: state.yearBookModels[index].link,
-                        );
-                      });
+                } else if (state is GetAllYearBookModeSuccess) {
+                  return SingleChildScrollView(
+                    child: ListView.builder(
+                        scrollDirection: Axis.vertical,
+                        physics: const NeverScrollableScrollPhysics(),
+                        shrinkWrap: true,
+                        itemCount: state.yearBookModels.length,
+                        itemBuilder: (context, index) {
+                          return Tile(
+                            title: state.yearBookModels[index].name,
+                            link: state.yearBookModels[index].link,
+                          );
+                        }),
+                  );
                 } else {
                   return const Text("NO CONTENT TO SHOW");
                 }

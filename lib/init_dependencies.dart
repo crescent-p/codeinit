@@ -15,7 +15,9 @@ import 'package:codeinit/features/blog/data/repository/blog_data_source_implemen
 import 'package:codeinit/features/blog/domain/repository/blog_repository.dart';
 import 'package:codeinit/features/blog/domain/usecases/create_blog_usecase.dart';
 import 'package:codeinit/features/blog/domain/usecases/get_all_blogs_usecase.dart';
+import 'package:codeinit/features/blog/domain/usecases/get_all_year_bookmodel_usecase.dart';
 import 'package:codeinit/features/blog/domain/usecases/get_personal_blogs_usecase.dart';
+import 'package:codeinit/features/blog/domain/usecases/upload_yearbook_usecase.dart';
 import 'package:codeinit/features/blog/presentation/bloc/blog_bloc.dart';
 import 'package:codeinit/features/home_screen/data/data_sources/remote_data_source.dart';
 import 'package:codeinit/features/home_screen/data/repository_impl/year_book_repository_imp.dart';
@@ -109,6 +111,11 @@ void _initBlog() {
   serviceLocator.registerLazySingleton(
     () => Hive.box(name: 'blogs'),
   );
+  serviceLocator.registerFactory(
+      () => GetAllYearBookModelUseCase(repository: serviceLocator()));
+
+  serviceLocator.registerFactory(
+      () => UploadYearBookUseCase(repository: serviceLocator()));
   serviceLocator
       .registerFactory<BlogRemoteDataSource>(() => BlogRemoteDataSourceImple(
             client: serviceLocator(),
@@ -136,5 +143,7 @@ void _initBlog() {
         createBlogUseCase: serviceLocator(),
         getAllBlogsUseCase: serviceLocator(),
         getPersonalBlogsUseCase: serviceLocator(),
+        uploadYearBookUseCase: serviceLocator(),
+        getAllYearBookModelUseCase: serviceLocator(),
       ));
 }

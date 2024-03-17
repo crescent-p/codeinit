@@ -12,7 +12,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 part 'auth_event.dart';
 part 'auth_state.dart';
 
-class AuthBloc extends Bloc<AuthEvent, AuthState> {
+class AuthBloc extends Bloc<AuthEvent, AuthStateMine> {
   final AuthSignUpUseCase _userSignUpUseCase;
   final AuthSignInUseCase _userSignInUseCase;
   final AuthCurrentUserUseCase _currentUserUseCase;
@@ -35,16 +35,17 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<AuthSignUpEvent>(_onAuthSignUpEvent);
     on<AuthSignInEvent>(_onAuthSignInEvent);
     on<AuthCurrentUserEvent>(_currentUserEvent);
-    on<AuthSignOutEvent> (_onAuthSignOutEvent);
+    on<AuthSignOutEvent>(_onAuthSignOutEvent);
   }
-  void _onAuthSignOutEvent(AuthSignOutEvent event, Emitter<AuthState> emit) async {
+  void _onAuthSignOutEvent(
+      AuthSignOutEvent event, Emitter<AuthStateMine> emit) async {
     final res = await _signOutUseCase(NoParams());
     res.fold((l) => emit(AuthFailure(message: l.message)),
         (r) => emit(AuthSignOutSuccess()));
   }
 
   void _currentUserEvent(
-      AuthCurrentUserEvent event, Emitter<AuthState> emit) async {
+      AuthCurrentUserEvent event, Emitter<AuthStateMine> emit) async {
     final res = await _currentUserUseCase(NoParams());
     res.fold((l) => emit(AuthFailure(message: l.message)),
         (r) => _emitAuthSuccess(r, emit));
@@ -52,7 +53,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
   //functions
   void _onAuthSignUpEvent(
-      AuthSignUpEvent event, Emitter<AuthState> emit) async {
+      AuthSignUpEvent event, Emitter<AuthStateMine> emit) async {
     final res = await _userSignUpUseCase.repository.signUpWithEmailAndPassword(
         user: event.user, email: event.email, password: event.password);
     res.fold((l) => emit(AuthFailure(message: l.message)),
@@ -60,7 +61,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   }
 
   void _onAuthSignInEvent(
-      AuthSignInEvent event, Emitter<AuthState> emit) async {
+      AuthSignInEvent event, Emitter<AuthStateMine> emit) async {
     final res = await _userSignInUseCase.repository.signInWithEmailAndPassword(
         email: event.email, password: event.password);
     res.fold((l) => emit(AuthFailure(message: l.message)),
@@ -68,7 +69,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   }
 
 //everytime AuthSuccess is emitted, the user is updated
-  void _emitAuthSuccess(User user, Emitter<AuthState> emit) {
+  void _emitAuthSuccess(User user, Emitter<AuthStateMine> emit) {
     _appUserCubit.updateUser(user);
     emit(AuthSuccess(user: user));
   }

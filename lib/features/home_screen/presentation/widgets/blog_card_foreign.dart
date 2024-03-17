@@ -1,5 +1,3 @@
-
-
 import 'package:codeinit/core/theme/colors.dart';
 import 'package:codeinit/core/utils/date_format.dart';
 import 'package:codeinit/features/blog/presentation/bloc/blog_bloc.dart';
@@ -19,7 +17,10 @@ class BlogCardForeign extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => BlogViewPage(blog: state.blogs[index]),
+            builder: (context) => BlogViewPage(
+              blog: state.blogs[index],
+              state: state,
+            ),
           ),
         );
       },
@@ -27,7 +28,7 @@ class BlogCardForeign extends StatelessWidget {
         margin: const EdgeInsets.all(10),
         padding: const EdgeInsets.all(10),
         decoration: BoxDecoration(
-          color: AppPallete.greyColor,
+          color: Color.fromARGB(255, 81, 197, 247),
           borderRadius: BorderRadius.circular(10),
           boxShadow: const [
             BoxShadow(
@@ -43,7 +44,6 @@ class BlogCardForeign extends StatelessWidget {
               children: [
                 const SizedBox(width: 10),
                 Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       state.blogs[index].posterName ?? ' ',
@@ -51,6 +51,7 @@ class BlogCardForeign extends StatelessWidget {
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
                       ),
+                      textAlign: TextAlign.start,
                     ),
                     Text(
                       dateFormatDDMMYYYY(state.blogs[index].createdAt),
@@ -70,6 +71,7 @@ class BlogCardForeign extends StatelessWidget {
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
               ),
+              textAlign: TextAlign.start,
             ),
             const SizedBox(height: 10),
             Text(
@@ -78,6 +80,7 @@ class BlogCardForeign extends StatelessWidget {
                 fontSize: 16,
                 fontWeight: FontWeight.w300,
               ),
+              textAlign: TextAlign.start,
             ),
             Image(image: NetworkImage(state.blogs[index].imageUrl))
           ],

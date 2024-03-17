@@ -30,3 +30,15 @@ final class BlogLoadPersonalSuccess extends BlogState {
 
   BlogLoadPersonalSuccess({required this.blogs});
 }
+
+final class UploadYearBookSuccess extends BlogState {
+  final String status;
+
+  UploadYearBookSuccess({required this.status});
+}
+
+final class GetAllYearBookModeSuccess extends BlogState {
+  final List<YearBook> yearBookModels;
+
+  GetAllYearBookModeSuccess({required this.yearBookModels});
+}

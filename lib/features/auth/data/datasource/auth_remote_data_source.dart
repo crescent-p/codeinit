@@ -53,10 +53,10 @@ class AuthRemoteDataSourceImple implements AuthRemoteDataSource {
           id: response.user!.id,
           email: email,
           name: email,
-          image_url: response.user!.userMetadata![0].avatarUrl!,
-          phone_number: response.user!.userMetadata![0].phoneNumber!,
-          website: response.user!.userMetadata![0].website!,
-          designation: response.user!.userMetadata![0].designation!,
+          image_url: response.user!.userMetadata!['image_url'],
+          phone_number: response.user!.userMetadata!['phone_number'],
+          website: response.user!.userMetadata!['website'],
+          designation: response.user!.userMetadata!['designation'],
         );
       }
     } catch (e) {

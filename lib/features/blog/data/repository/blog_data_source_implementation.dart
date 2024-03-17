@@ -7,6 +7,7 @@ import 'package:codeinit/features/blog/data/data_sources/blog_remote_data_source
 import 'package:codeinit/features/blog/data/models/blog_model.dart';
 import 'package:codeinit/features/blog/domain/entities/blog.dart';
 import 'package:codeinit/features/blog/domain/repository/blog_repository.dart';
+import 'package:codeinit/features/home_screen/data/models/yearbook_model.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:uuid/uuid.dart';
 
@@ -25,17 +26,17 @@ class BlogRepositoryImple implements BlogRepository {
       {required String title,
       required String content,
       required File image,
-      required String postId,
-      required List<String> topics}) async {
+      required String user_id,
+      required String year}) async {
     try {
       BlogModel blog = BlogModel(
-        id: const Uuid().v1(),
-        postId: postId,
+        id: '',
+        user_id: user_id,
         title: title,
         content: content,
         imageUrl: "imageUrl",
         createdAt: DateTime.now(),
-        topics: topics,
+        year: year,
       );
       String url =
           await blogRemoteDataSource.uploadImage(file: image, blog: blog);
@@ -66,11 +67,30 @@ class BlogRepositoryImple implements BlogRepository {
   }
 
   @override
-  Future<Either<Failure, List<Blog>>> getPersonalBlogs({required String name})async {
+  Future<Either<Failure, List<Blog>>> getPersonalBlogs(
+      {required String name}) async {
     try {
       return await blogRemoteDataSource.getPersonalBlogs(name: name);
     } catch (e) {
       return Left(Failure(message: e.toString()));
+    }
+  }
+
+  @override
+  Future<String> uploadYearBook({required File file}) async {
+    try {
+      return await blogRemoteDataSource.uploadYearBook(file: file);
+    } catch (e) {
+      throw Failure(message: e.toString());
+    }
+  }
+
+  @override
+  Future<List<YearBookModel>> getAllYearBookRemote() async {
+    try {
+      return await blogRemoteDataSource.getAllYearBookRemote();
+    } catch (e) {
+      throw Failure(message: e.toString());
     }
   }
 }

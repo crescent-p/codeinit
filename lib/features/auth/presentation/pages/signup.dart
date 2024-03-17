@@ -1,11 +1,11 @@
 import 'dart:io';
 
 import 'package:codeinit/core/common/widgets/loader.dart';
+import 'package:codeinit/core/secrets/supabase_secrets.dart';
 import 'package:codeinit/core/theme/colors.dart';
 import 'package:codeinit/core/utils/image_picker.dart';
 import 'package:codeinit/core/utils/show_snackbar.dart';
 import 'package:codeinit/features/auth/data/models/user_model.dart';
-import 'package:codeinit/features/blog/presentation/pages/blog_page.dart';
 import 'package:codeinit/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:codeinit/features/auth/presentation/pages/signin.dart';
 import 'package:codeinit/features/auth/presentation/widgets/auth_field.dart';
@@ -13,7 +13,8 @@ import 'package:codeinit/features/auth/presentation/widgets/auth_gradient_button
 import 'package:codeinit/features/home_screen/presentation/pages/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:image_picker/image_picker.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:uuid/uuid.dart';
 
 class SignUp extends StatefulWidget {
   const SignUp({super.key});
@@ -43,13 +44,26 @@ class _SignUpState extends State<SignUp> {
     super.dispose();
   }
 
+  Future<String> _returnImageUrl(File? image) async {
+    if (image != null) {
+      final supabase = Supabase.instance;
+
+      final uniqueid = const Uuid().v1().toString();
+
+      await supabase.client.storage.from('blog_images').upload(uniqueid, image);
+      return supabase.client.storage.from('blog_images').getPublicUrl(uniqueid);
+    } else {
+      return '';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         body: SingleChildScrollView(
       child: Padding(
         padding: const EdgeInsets.all(20.0),
-        child: BlocConsumer<AuthBloc, AuthState>(
+        child: BlocConsumer<AuthBloc, AuthStateMine>(
           listener: (context, state) {
             if (state is AuthFailure) {
               return showSnackBar(context, "Error: ${state.message}");
@@ -59,7 +73,7 @@ class _SignUpState extends State<SignUp> {
             if (state is AuthLoading) {
               return const LoadingIndicator();
             } else if (state is AuthSuccess) {
-              Navigator.push(context, HomeScreen.route());
+              return const HomeScreen();
             }
             return Form(
               key: _formKey,
@@ -117,14 +131,14 @@ class _SignUpState extends State<SignUp> {
                       icon: const Icon(Icons.add_a_photo)),
                   const SizedBox(height: 20),
                   AuthSignUpButton(
-                      onPressed: () {
+                      onPressed: () async {
                         context.read<AuthBloc>().add(AuthSignUpEvent(
                             user: UserModel(
-                              name: nameController.text,
-                              designation: designationController.text,
-                              website: websiteController.text,
-                              phone_number: phoneController.text,
-                              image_url: image?.path ?? "",
+                              name: nameController.text.trim(),
+                              designation: designationController.text.trim(),
+                              website: websiteController.text.trim(),
+                              phone_number: phoneController.text.trim(),
+                              image_url: await _returnImageUrl(image),
                               id: "",
                               email: emailController.text,
                             ),

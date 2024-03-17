@@ -13,6 +13,7 @@ class _HomeBarState extends State<HomeBar> {
     'NITC \n2022',
     'Looking \nBack',
     'Today',
+    'Tomorrow',
   ];
   final List<Widget> images = <Widget>[
     ClipRRect(
@@ -36,35 +37,45 @@ class _HomeBarState extends State<HomeBar> {
         fit: BoxFit.cover,
       ),
     ),
+    ClipRRect(
+      borderRadius: BorderRadius.circular(16),
+      child: Image.network(
+        'https://images.pexels.com/photos/19808874/pexels-photo-19808874/free-photo-of-the-light.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+        fit: BoxFit.cover,
+      ),
+    ),
   ];
 
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: SizedBox(
-        height: 800,
+        height: 1000,
         width: 400,
         child: Scaffold(
-          body: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: <Widget>[
-              const Text(
-                'Welcome!',
-                style: TextStyle(
-                  fontSize: 50,
-                  fontWeight: FontWeight.bold,
+          body: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
+                const Text(
+                  'Welcome!',
+                  style: TextStyle(
+                    fontSize: 50,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
-              ),
-              SizedBox(
-                //margin: const EdgeInsets.symmetric(horizontal: 16),
-                height: 800,
-                width: double.infinity,
-                child: VerticalCardPager(
-                  titles: titles,
-                  images: images,
-                ),
-              )
-            ],
+                SizedBox(
+                  //margin: const EdgeInsets.symmetric(horizontal: 16),
+                  height: 800,
+                  width: double.infinity,
+                  child: VerticalCardPager(
+                    titles: titles,
+                    images: images,
+                    initialPage: 3,
+                  ),
+                )
+              ],
+            ),
           ),
         ),
       ),

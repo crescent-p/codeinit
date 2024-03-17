@@ -2,6 +2,8 @@ import 'package:codeinit/core/theme/colors.dart';
 import 'package:codeinit/core/utils/date_format.dart';
 import 'package:codeinit/features/blog/presentation/bloc/blog_bloc.dart';
 import 'package:codeinit/features/blog/presentation/pages/blog_view_page.dart';
+import 'package:codeinit/features/home_screen/presentation/pages/local_profile.dart';
+import 'package:codeinit/features/home_screen/presentation/pages/profile.dart';
 import 'package:flutter/material.dart';
 
 class BlogCard extends StatelessWidget {
@@ -16,7 +18,10 @@ class BlogCard extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => BlogViewPage(blog: state.blogs[index]),
+            builder: (context) => LocalProfile(
+              state: state,
+              index: index,
+            ),
           ),
         );
       },
@@ -24,7 +29,7 @@ class BlogCard extends StatelessWidget {
         margin: const EdgeInsets.all(10),
         padding: const EdgeInsets.all(10),
         decoration: BoxDecoration(
-          color: AppPallete.greyColor,
+          color: Color.fromARGB(255, 92, 9, 180),
           borderRadius: BorderRadius.circular(10),
           boxShadow: const [
             BoxShadow(
@@ -45,15 +50,15 @@ class BlogCard extends StatelessWidget {
                     Text(
                       state.blogs[index].posterName ?? ' ',
                       style: const TextStyle(
-                        fontSize: 18,
+                        fontSize: 30,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                     Text(
                       dateFormatDDMMYYYY(state.blogs[index].createdAt),
                       style: const TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w300,
+                        fontSize: 15,
+                        fontWeight: FontWeight.w500,
                       ),
                     ),
                   ],

@@ -13,12 +13,12 @@ class CreateBlogUseCase implements UseCase<Blog, Params> {
   @override
   Future<Either<Failure, Blog>> call(Params params) async {
     try {
-     return await repository.createBlog(
+      return await repository.createBlog(
         title: params.title,
         content: params.content,
         image: params.image,
-        postId: params.postId,
-        topics: params.topics,
+        user_id: params.user_id,
+        year: params.year,
       );
     } catch (e) {
       return left(Failure(message: e.toString()));
@@ -30,14 +30,14 @@ class Params {
   final String title;
   final String content;
   final File image;
-  final String postId;
-  final List<String> topics;
+  final String user_id;
+  final String year;
 
   Params({
     required this.title,
     required this.content,
     required this.image,
-    required this.postId,
-    required this.topics,
+    required this.user_id,
+    required this.year,
   });
 }

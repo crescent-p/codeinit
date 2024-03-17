@@ -31,12 +31,19 @@ class _SignInState extends State<SignIn> {
   }
 
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    context.read<AuthBloc>().add(AuthCurrentUserEvent());
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
         body: SingleChildScrollView(
       child: Padding(
         padding: const EdgeInsets.fromLTRB(12, 100, 12, 50),
-        child: BlocConsumer<AuthBloc, AuthState>(
+        child: BlocConsumer<AuthBloc, AuthStateMine>(
           listener: (context, state) {
             if (state is AuthFailure) {
               return showSnackBar(context, state.message);
@@ -53,7 +60,7 @@ class _SignInState extends State<SignIn> {
             if (state is AuthLoading) {
               return const LoadingIndicator();
             }
-            return BlocConsumer<AuthBloc, AuthState>(
+            return BlocConsumer<AuthBloc, AuthStateMine>(
               listener: (context, state) {
                 if (state is AuthFailure) {
                   return showSnackBar(

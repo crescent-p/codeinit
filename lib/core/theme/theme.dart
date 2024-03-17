@@ -11,6 +11,7 @@ class AppTheme {
       );
 
   static final darkThemeMode = ThemeData.dark().copyWith(
+    
       chipTheme: ChipThemeData(
         backgroundColor: AppPallete.backgroundColor,
         disabledColor: AppPallete.backgroundColor,
