@@ -2,17 +2,15 @@
 
 A new Flutter project.
 
-## Getting Started
-
 Flutter App Using Supabase, Hive, BLoc, Cubit.
 
 ##BackEnd : Supabase and Hive
 
-#Supabase
+##Supabase
     - User's can upload blogs and yearbooks to the database.
     - Other user's can view the blogs and yearbooks uploaded onto the database.
 
-#Hive
+##Hive
     - When internet connection is present the app will sync the data with the local database.
     - When offline the cached data is displayed.
 
