@@ -29,12 +29,10 @@ Flutter App Using Supabase, Hive, BLoc, Cubit.
 
 #SignIn Page
     - User's can sign in using their email and password.
-    
     ![SignIN Page](https://zmcohvajrzxmartfcasr.supabase.co/storage/v1/object/public/mybucker/signin%20page.jpg)
     
 #SignUp Page
     - User's can sign up using their email and password.
-    
     ![SignUp Page](https://zmcohvajrzxmartfcasr.supabase.co/storage/v1/object/public/mybucker/signup%20page.jpg)
 
 #HomeScreen
@@ -48,7 +46,7 @@ Flutter App Using Supabase, Hive, BLoc, Cubit.
 
  ![YearBook Page](https://zmcohvajrzxmartfcasr.supabase.co/storage/v1/object/public/mybucker/yearbook%20download%20list.jpg)
 
- ![YearBook Dowloaded] (https://zmcohvajrzxmartfcasr.supabase.co/storage/v1/object/public/mybucker/yearbook.jpg)
+ ![YearBook Dowloaded](https://zmcohvajrzxmartfcasr.supabase.co/storage/v1/object/public/mybucker/yearbook.jpg)
 
 #Search Page
     - User's can search for other user's yearbook.
