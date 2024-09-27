@@ -8,7 +8,6 @@ final class UploadPdfEvent extends MainPageEvent {
   final YearBookModel model;
 
   UploadPdfEvent({required this.file, required this.model});
-
 }
 
 final class GetYearBookEvent extends MainPageEvent {
